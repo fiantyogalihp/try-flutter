@@ -86,6 +86,7 @@ class _MyAppState extends State<MyApp> {
                           number.toString(),
                           style: TextStyle(
                             fontSize: 25,
+                            fontStyle: FontStyle.italic,
                           ),
                         ),
                       ),
