@@ -10,19 +10,19 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  int number = 0;
+  int _number = 0;
   int counter = 1;
   List<Widget> widgets = [];
-  //variable int number utuk menyimpan bilangan yg akan eribah ketika kita mengklik tombol
+  //variable int _number utuk menyimpan bilangan yg akan eribah ketika kita mengklik tombol
   void TombolTambah() {
     //jika function berisi lebih dari satu menggunakan '{}', jika function hanya satu lebih baik menggunakan '=>'.
     //'tekanTombol' adalah method yg harus dibuat agar Button berjalan dengan baik,
     setState(() {
       // setState(() {}); adalah perintah unruk merefresh tampilan stateful widget sesuai dengan kondsi yang ada saat itu juga
-      //number = number + 1; ini adalah kondisi
+      //_number +=1; ini adalah kondisi
       widgets.add(Text(
         'Data ke-' + counter.toString(),
-        style: TextStyle(
+        style: const TextStyle(
           fontWeight: FontWeight.w700,
           fontSize: 35,
           fontStyle: FontStyle.italic,
@@ -30,14 +30,14 @@ class _MyAppState extends State<MyApp> {
       ));
       counter++;
 
-      number.toString();
-      number++;
+      '$_number';
+      _number++;
     });
   }
 
   // void Ulang() {
   //   setState(() {
-  //     number = 0;
+  //     _number = 0;
   //   });
   // }
   //tidak menggunakan ini karena memakai Anonymous method
@@ -54,6 +54,8 @@ class _MyAppState extends State<MyApp> {
               fontWeight: FontWeight.w700,
             ),
           ),
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
         ),
         body: Center(
           child: Container(
@@ -83,15 +85,15 @@ class _MyAppState extends State<MyApp> {
                           color: Colors.blueGrey,
                         ),
                         child: Text(
-                          number.toString(),
+                          '$_number',
                           style: TextStyle(
                             fontSize: 25,
                             fontStyle: FontStyle.italic,
                           ),
                         ),
                       ),
-                      //disini var number berype data int. ketika ditampilkan harus dirubah ke dalam String
-                      //style text, pada parameter fontsize, type data fontsize dalah double, jadi yang tadinya number=int harus diubah ke number.toDouble
+                      //disini var _number berype data int. ketika ditampilkan harus dirubah ke dalam String
+                      //style text, pada parameter fontsize, type data fontsize dalah double, jadi yang tadinya _number=int harus diubah ke _number.toDouble
                       //summary, ketika memanggil variable harus menyesuaikan kondisi dan tempatnya dari type datanya tersebut
                       ElevatedButton(
                         //RaisedButton() adalah widget lama dari flutter
@@ -121,8 +123,8 @@ class _MyAppState extends State<MyApp> {
                           setState(() {
                             widgets.removeLast();
                             counter--;
-                            // number -= 1;
-                            number--;
+                            // _number -= 1;
+                            _number--;
                           });
                         },
                         //ini adalah anonymous method, method yang tidak memiliki nama
