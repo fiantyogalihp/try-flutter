@@ -20,14 +20,25 @@ class _MyAppState extends State<MyApp> {
     setState(() {
       // setState(() {}); adalah perintah unruk merefresh tampilan stateful widget sesuai dengan kondsi yang ada saat itu juga
       //_number +=1; ini adalah kondisi
-      widgets.add(Text(
-        'Data ke-' + counter.toString(),
-        style: const TextStyle(
-          fontWeight: FontWeight.w700,
-          fontSize: 35,
-          fontStyle: FontStyle.italic,
-        ),
-      ));
+      widgets.add(Center(
+          child: Container(
+              margin: EdgeInsets.all(5),
+              alignment: Alignment.center,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(25),
+                color: Colors.pink,
+              ),
+              width: 210,
+              height: 90,
+              child: Text(
+                'Data ke-' + counter.toString(),
+                style: const TextStyle(
+                  fontWeight: FontWeight.w700,
+                  fontSize: 20,
+                  fontStyle: FontStyle.italic,
+                  color: Colors.white,
+                ),
+              ))));
       counter++;
 
       '$_number';
@@ -45,6 +56,9 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      theme: ThemeData(
+        primarySwatch: Colors.lightBlue,
+      ),
       home: Scaffold(
         appBar: AppBar(
           title: const Text(
@@ -52,13 +66,15 @@ class _MyAppState extends State<MyApp> {
             style: TextStyle(
               fontStyle: FontStyle.italic,
               fontWeight: FontWeight.w700,
+              color: Colors.white,
             ),
           ),
           shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
         ),
         body: Center(
           child: Container(
+            margin: EdgeInsets.all(3),
             decoration: const BoxDecoration(
                 gradient: LinearGradient(colors: Colors.accents)),
             width: double.infinity,
@@ -118,19 +134,40 @@ class _MyAppState extends State<MyApp> {
                             borderRadius: BorderRadius.all(Radius.circular(20)),
                           ),
                         ),
-                        onPressed: () {
-                          //"onPressed: () {}" diganti "Ulang," jika tidak menggunakan Anonymous method
-                          setState(() {
-                            widgets.removeLast();
-                            counter--;
-                            // _number -= 1;
-                            _number--;
-                          });
-                        },
+                        onPressed: (widgets.isEmpty)
+                            ? null
+                            : () {
+                                //"onPressed: () {}" diganti "Ulang," jika tidak menggunakan Anonymous method
+                                setState(() {
+                                  widgets.removeLast();
+                                  counter--;
+                                  // _number -= 1;
+                                  _number--;
+                                });
+                              },
                         //ini adalah anonymous method, method yang tidak memiliki nama
                         //ini cocok digunakan jika method nya tidak pernah dipanggil di tempat lain
                         child: const Text('Hapus Data'),
                       ),
+                      ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            primary: Colors.orange,
+                            onPrimary: Colors.white,
+                            shape: const RoundedRectangleBorder(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(20)),
+                            ),
+                          ),
+                          onPressed: (widgets.isEmpty)
+                              ? null
+                              : () {
+                                  setState(() {
+                                    widgets.clear();
+                                    _number = 0;
+                                    counter = 1;
+                                  });
+                                },
+                          child: Text('Refresh')),
                       //can replace row,
                     ],
                   ),
