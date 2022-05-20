@@ -14,7 +14,7 @@ class _MyAppState extends State<MyApp> {
   int counter = 1;
   List<Widget> widgets = [];
   //variable int _number utuk menyimpan bilangan yg akan eribah ketika kita mengklik tombol
-  void TombolTambah() {
+  void tombolTambah() {
     //jika function berisi lebih dari satu menggunakan '{}', jika function hanya satu lebih baik menggunakan '=>'.
     //'tekanTombol' adalah method yg harus dibuat agar Button berjalan dengan baik,
     setState(() {
@@ -120,7 +120,7 @@ class _MyAppState extends State<MyApp> {
                             borderRadius: BorderRadius.all(Radius.circular(20)),
                           ),
                         ),
-                        onPressed: TombolTambah,
+                        onPressed: tombolTambah,
                         //onPressed adlah event handler, yaitu ketika buttton nya di klik akan menjalankan method apa
                         //yang memiliki nama method 'TekanTombol'
                         child: const Text('Tambah Data'),
