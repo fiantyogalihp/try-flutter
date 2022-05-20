@@ -10,34 +10,45 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  int number = 0;
+  int _number = 0;
   int counter = 1;
   List<Widget> widgets = [];
-  //variable int number utuk menyimpan bilangan yg akan eribah ketika kita mengklik tombol
-  void TombolTambah() {
+  //variable int _number utuk menyimpan bilangan yg akan eribah ketika kita mengklik tombol
+  void tombolTambah() {
     //jika function berisi lebih dari satu menggunakan '{}', jika function hanya satu lebih baik menggunakan '=>'.
     //'tekanTombol' adalah method yg harus dibuat agar Button berjalan dengan baik,
     setState(() {
       // setState(() {}); adalah perintah unruk merefresh tampilan stateful widget sesuai dengan kondsi yang ada saat itu juga
-      //number = number + 1; ini adalah kondisi
-      widgets.add(Text(
-        'Data ke-' + counter.toString(),
-        style: TextStyle(
-          fontWeight: FontWeight.w700,
-          fontSize: 35,
-          fontStyle: FontStyle.italic,
-        ),
-      ));
+      //_number +=1; ini adalah kondisi
+      widgets.add(Center(
+          child: Container(
+              margin: EdgeInsets.all(5),
+              alignment: Alignment.center,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(25),
+                color: Colors.pink,
+              ),
+              width: 210,
+              height: 90,
+              child: Text(
+                'Data ke-' + counter.toString(),
+                style: const TextStyle(
+                  fontWeight: FontWeight.w700,
+                  fontSize: 20,
+                  fontStyle: FontStyle.italic,
+                  color: Colors.white,
+                ),
+              ))));
       counter++;
 
-      number.toString();
-      number++;
+      '$_number';
+      _number++;
     });
   }
 
   // void Ulang() {
   //   setState(() {
-  //     number = 0;
+  //     _number = 0;
   //   });
   // }
   //tidak menggunakan ini karena memakai Anonymous method
@@ -45,6 +56,9 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      theme: ThemeData(
+        primarySwatch: Colors.lightBlue,
+      ),
       home: Scaffold(
         appBar: AppBar(
           title: const Text(
@@ -52,11 +66,15 @@ class _MyAppState extends State<MyApp> {
             style: TextStyle(
               fontStyle: FontStyle.italic,
               fontWeight: FontWeight.w700,
+              color: Colors.white,
             ),
           ),
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
         ),
         body: Center(
           child: Container(
+            margin: EdgeInsets.all(3),
             decoration: const BoxDecoration(
                 gradient: LinearGradient(colors: Colors.accents)),
             width: double.infinity,
@@ -83,14 +101,15 @@ class _MyAppState extends State<MyApp> {
                           color: Colors.blueGrey,
                         ),
                         child: Text(
-                          number.toString(),
+                          '$_number',
                           style: TextStyle(
                             fontSize: 25,
+                            fontStyle: FontStyle.italic,
                           ),
                         ),
                       ),
-                      //disini var number berype data int. ketika ditampilkan harus dirubah ke dalam String
-                      //style text, pada parameter fontsize, type data fontsize dalah double, jadi yang tadinya number=int harus diubah ke number.toDouble
+                      //disini var _number berype data int. ketika ditampilkan harus dirubah ke dalam String
+                      //style text, pada parameter fontsize, type data fontsize dalah double, jadi yang tadinya _number=int harus diubah ke _number.toDouble
                       //summary, ketika memanggil variable harus menyesuaikan kondisi dan tempatnya dari type datanya tersebut
                       ElevatedButton(
                         //RaisedButton() adalah widget lama dari flutter
@@ -101,7 +120,7 @@ class _MyAppState extends State<MyApp> {
                             borderRadius: BorderRadius.all(Radius.circular(20)),
                           ),
                         ),
-                        onPressed: TombolTambah,
+                        onPressed: tombolTambah,
                         //onPressed adlah event handler, yaitu ketika buttton nya di klik akan menjalankan method apa
                         //yang memiliki nama method 'TekanTombol'
                         child: const Text('Tambah Data'),
@@ -115,19 +134,40 @@ class _MyAppState extends State<MyApp> {
                             borderRadius: BorderRadius.all(Radius.circular(20)),
                           ),
                         ),
-                        onPressed: () {
-                          //"onPressed: () {}" diganti "Ulang," jika tidak menggunakan Anonymous method
-                          setState(() {
-                            widgets.removeLast();
-                            counter--;
-                            // number -= 1;
-                            number--;
-                          });
-                        },
+                        onPressed: (widgets.isEmpty)
+                            ? null
+                            : () {
+                                //"onPressed: () {}" diganti "Ulang," jika tidak menggunakan Anonymous method
+                                setState(() {
+                                  widgets.removeLast();
+                                  counter--;
+                                  // _number -= 1;
+                                  _number--;
+                                });
+                              },
                         //ini adalah anonymous method, method yang tidak memiliki nama
                         //ini cocok digunakan jika method nya tidak pernah dipanggil di tempat lain
                         child: const Text('Hapus Data'),
                       ),
+                      ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            primary: Colors.orange,
+                            onPrimary: Colors.white,
+                            shape: const RoundedRectangleBorder(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(20)),
+                            ),
+                          ),
+                          onPressed: (widgets.isEmpty)
+                              ? null
+                              : () {
+                                  setState(() {
+                                    widgets.clear();
+                                    _number = 0;
+                                    counter = 1;
+                                  });
+                                },
+                          child: Text('Refresh')),
                       //can replace row,
                     ],
                   ),
